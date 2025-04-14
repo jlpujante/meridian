@@ -41,16 +41,16 @@ const route = new Hono<HonoEnv>()
         tldr: z.string(),
         createdAt: z.coerce.date(),
         model_author: z.string(),
-        clustering_params: z.object({
-          umap: z.object({
-            n_neighbors: z.number(),
-          }),
-          hdbscan: z.object({
-            min_cluster_size: z.number(),
-            min_samples: z.number(),
-            epsilon: z.number(),
-          }),
-        }),
+//         clustering_params: z.object({
+//           umap: z.object({
+//             n_neighbors: z.number(),
+//           }),
+//           hdbscan: z.object({
+//             min_cluster_size: z.number(),
+//             min_samples: z.number(),
+//             epsilon: z.number(),
+//           }),
+//         }),
       })
     ),
     async c => {

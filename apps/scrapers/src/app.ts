@@ -1,11 +1,11 @@
-import { $articles, $sources, and, gte, lte, isNotNull, eq, not } from '@meridian/database';
+import { $articles, $sources, and, gte, lte, isNotNull, eq, not, $reports, desc } from '@meridian/database';
 import { Env } from './index';
 import { getDb, hasValidAuthToken } from './lib/utils';
 import { Hono } from 'hono';
 import { trimTrailingSlash } from 'hono/trailing-slash';
 import openGraph from './routers/openGraph.router';
 import reportsRouter from './routers/reports.router';
-import { startRssFeedScraperWorkflow } from './workflows/rssFeed.workflow';
+import triggersRouter from './routers/triggers.router';
 import { getRssFeedWithFetch } from './lib/puppeteer';
 import { parseRSSFeed } from './lib/parsers';
 
@@ -13,9 +13,17 @@ export type HonoEnv = { Bindings: Env };
 
 const app = new Hono<HonoEnv>()
   .use(trimTrailingSlash())
-  .get('/favicon.ico', async c => c.notFound()) // disable favicon
-  .route('/reports', reportsRouter)
+  .route('/', reportsRouter)
+  .route('/', triggersRouter)
   .route('/openGraph', openGraph)
+  .get('/', async c => c.json({ response: "Meridian Project" }))
+  .get('/env', async c => {
+    console.log('c.env.DATABASE_URL => ' + c.env.DATABASE_URL)
+    console.log('c.env.GOOGLE_AI_API_KEY => ' + c.env.GOOGLE_AI_API_KEY)
+    console.log('c.env.MERIDIAN_SECRET_KEY => ' + c.env.MERIDIAN_SECRET_KEY)
+    return c.json({ response: "Success" }, 200);
+  })
+  .get('/favicon.ico', async c => c.notFound()) // disable favicon
   .get('/ping', async c => c.json({ pong: true }))
   .get('/events', async c => {
     // require bearer auth token
@@ -87,18 +95,6 @@ const app = new Hono<HonoEnv>()
 
     return c.json(response);
   })
-  .get('/trigger-rss', async c => {
-    const token = c.req.query('token');
-    if (token !== c.env.MERIDIAN_SECRET_KEY) {
-      return c.json({ error: 'Unauthorized' }, 401);
-    }
-
-    const res = await startRssFeedScraperWorkflow(c.env, { force: true });
-    if (res.isErr()) {
-      return c.json({ error: res.error }, 500);
-    }
-
-    return c.json({ success: true });
-  });
+;
 
 export default app;

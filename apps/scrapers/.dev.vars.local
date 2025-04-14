@@ -1,2 +1,5 @@
-DATABASE_URL=""
-SECRET_KEY=""
+DEBUG="false"
+MERIDIAN_SECRET_KEY="<PrivateTokenToSecureEndpoints>"
+DATABASE_URL="postgresql://<dbuser>:<dbpasswd>@<host>/<dbname>"
+GOOGLE_API_KEY="<GOOGLE_AI_API_KEY>"
+GOOGLE_BASE_URL="https://generativelanguage.googleapis.com/v1beta"

@@ -8,6 +8,7 @@ from datetime import datetime
 from typing import Optional
 from pydantic import BaseModel, field_validator
 from dotenv import load_dotenv
+from src.utils import is_debug_mode
 
 load_dotenv()
 
@@ -46,11 +47,17 @@ class Event(BaseModel):
             return parser.parse(value)
 
 
-def get_events(date: str = None):
-    url = f"https://meridian-production.alceos.workers.dev/events"
-
+def get_events(date: str = None, host: str = None):
+    """ Get events endpoint function
+    @param : date (ex: "2025-04-01")
+    @param : host ("http://localhost:8787")
+    """
+    url = f"https://meridian-production.alceos.workers.dev/events" if not host else f"{host}/events"
     if date:
         url += f"?date={date}"
+
+    if is_debug_mode():
+        print(f"url => {url}")
 
     response = requests.get(
         url,

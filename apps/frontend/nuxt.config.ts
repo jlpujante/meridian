@@ -27,7 +27,7 @@ export default defineNuxtConfig({
     public: {
       WORKER_API: 'http://localhost:8787',
     },
-    DATABASE_URL: '',
+    DATABASE_URL: 'postgresql://<dbuser>:<dbpasswd>@<host>/<dbname>',
   },
 
   devServer: {
