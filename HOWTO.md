@@ -6,7 +6,7 @@ A modular platform for automated information gathering, analysis, and personaliz
 
 ## ⚙️ Local Setup Guide
 
-**Tested on**: Ubuntu 22.10  
+**Tested on**: Ubuntu 22.10 & Ubuntu 24.10
 **Requirements**:  
 - Node.js (v22+, recommended v23.11.0+)  
 - PNPM (v9.15+)  
@@ -30,10 +30,12 @@ cd meridian
 
 ```bash
 # Install Node Version Manager
-sudo npm install -g n
+sudo apt install nodejs npm curl -y
 
-# Symlink Node (if needed)
-sudo ln -s /usr/local/bin/node /usr/bin/node
+# Install N Manager
+sudo npm install -g n
+sudo n stable
+hash -r
 
 # Verify version
 node -v
@@ -66,7 +68,7 @@ Run migrations:
 
 ```bash
 cd packages/database
-npm install
+pnpm install
 pnpm --filter @meridian/database db:migrate
 ```
 
@@ -78,14 +80,14 @@ pnpm --filter @meridian/database db:migrate
 
 ```bash
 cd apps/frontend
-npm install
+pnpm install
 ```
 
 #### 🕸️ Scrapers
 
 ```bash
 cd ../scrapers
-npm install
+pnpm install
 ```
 
 ---
@@ -112,12 +114,46 @@ pip install -r requirements.txt
 
 ### 7️⃣ Configure Local Environment
 
-Edit `.dev.vars.local` inside `apps/scrapers/`:
+#### app/frontend
+Edit `nuxt.config.ts` inside `apps/frontend/` and set the correct database url:
+
+```json
+runtimeConfig: {
+    ...
+    DATABASE_URL: 'postgresql://<dbuser>:<dbpasswd>@<host>/<dbname>',
+  }
+```
+
+#### app/briefs
+Edit `.env.example` inside `apps/briefs/`:
+
+```bash
+# Copy environment file
+cp .env.example .env
+```
+
+```env
+DATABASE_URL="postgresql://<dbuser>:<dbpasswd>@<host>/<dbname>"
+GOOGLE_API_KEY="<GOOGLE_AI_API_KEY>"
+MERIDIAN_SECRET_KEY="<PrivateTokenToSecureEndpoints>"
+SCRAPER_URL="http://localhost:8787"
+```
+
+#### app/scrapers
+Edit `.dev.vars.example` inside `apps/scrapers/`:
+
+```bash
+cd ../scrapers
+
+# Copy environment file
+cp .dev.vars.example .dev.vars
+```
 
 ```env
 MERIDIAN_SECRET_KEY="<YourSecretKey>"
 DATABASE_URL="postgresql://<dbuser>:<dbpasswd>@<host>/<dbname>"
-GOOGLE_API_KEY="<YourGoogleAIKey>"
+GOOGLE_API_KEY="<GOOGLE_AI_API_KEY>"
+GOOGLE_BASE_URL="https://generativelanguage.googleapis.com/v1beta"
 ```
 
 ---

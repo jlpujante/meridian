@@ -101,7 +101,6 @@ networkx==3.4.2
 notebook==7.4.0
 notebook_shim==0.2.4
 numba==0.61.0
-numpy==1.24.4
 nvidia-cublas-cu12==12.4.5.8
 nvidia-cuda-cupti-cu12==12.4.127
 nvidia-cuda-nvrtc-cu12==12.4.127
@@ -120,8 +119,6 @@ openpyxl==3.1.5
 optuna==4.2.1
 overrides==7.7.0
 packaging==24.2
-pandas==2.2.3
-pandas-profiling==3.6.6
 pandocfilters==1.5.1
 parso==0.8.4
 patsy==1.0.1
