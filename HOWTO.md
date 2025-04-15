@@ -67,8 +67,13 @@ DATABASE_URL="postgresql://<dbuser>:<dbpassword>@<host>/<dbname>"
 **Run migrations:**
 
 ```bash
-cd packages/database
+# Go to the specific folder
+cd meridian/packages/database
+
+# Install dependencies
 pnpm install
+
+# Run the migration database
 pnpm --filter @meridian/database db:migrate
 ```
 
@@ -79,14 +84,20 @@ pnpm --filter @meridian/database db:migrate
 #### 🖥️ Frontend
 
 ```bash
-cd apps/frontend
+# Go to the specific folder
+cd meridian/apps/frontend
+
+# Install dependencies
 pnpm install
 ```
 
 #### 🕸️ Scrapers
 
 ```bash
+# Go to the specific folder
 cd ../scrapers
+
+# Install dependencies
 pnpm install
 ```
 
@@ -95,6 +106,7 @@ pnpm install
 ### 6️⃣ Install Python App Dependencies
 
 ```bash
+# Go to the specific folder
 cd ../briefs
 
 # Install virtualenv (if not already installed)
@@ -126,8 +138,10 @@ runtimeConfig: {
 #### ⚙️ Briefs
 
 ```bash
-# Copy and edit env file
+# Go to the specific folder
 cd ../briefs
+
+# Copy and edit env file for local environment
 cp .env.example .env
 ```
 
@@ -141,7 +155,10 @@ SCRAPER_URL="http://localhost:8787"
 #### ⚙️ Scrapers
 
 ```bash
+# Go to the specific folder
 cd ../scrapers
+
+# Copy and edit env file for local environment
 cp .dev.vars.example .dev.vars
 ```
 
@@ -175,7 +192,10 @@ Insert a new record into the `sources` table:
 #### Option A: Run All Apps via Turbo
 
 ```bash
+# Go to the specific folder
 cd meridian
+
+# Run development environment locally
 npm run dev
 ```
 
@@ -183,11 +203,17 @@ npm run dev
 
 ```bash
 # Terminal 1: Frontend
-cd apps/frontend
+# Go to the specific folder
+cd meridian/apps/frontend
+
+# Run development environment locally (only frontend)
 npm run dev
 
 # Terminal 2: Scrapers
-cd ../scrapers
+# Go to the specific folder
+cd meridian/apps/scrapers
+
+# Run development environment locally (only scrapers)
 npm run dev
 ```
 
@@ -198,6 +224,7 @@ npm run dev
 Use the secret token defined in `MERIDIAN_SECRET_KEY`:
 
 ```bash
+# Trigger the scrapers system to get the RSS feeds
 curl http://localhost:8787/trigger-rss?token=<MERIDIAN_SECRET_KEY>
 ```
 
@@ -206,8 +233,13 @@ curl http://localhost:8787/trigger-rss?token=<MERIDIAN_SECRET_KEY>
 ### 🔁 Generate a Briefing Report
 
 ```bash
-cd apps/briefs
+# Go to the specific folder
+cd meridian/apps/briefs
+
+# Activate the virtual environment
 source .venv/bin/activate
+
+# Run the python tool to generate the briefs
 python run_reportV5.py
 ```
 
@@ -217,7 +249,10 @@ python run_reportV5.py
 
 ```bash
 # Test Scrapers
-cd apps/scrapers
+# Go to the specific folder
+cd meridian/apps/scrapers
+
+# Run the tests
 npm run test
 ```
 
