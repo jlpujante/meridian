@@ -118,7 +118,11 @@ source .venv/bin/activate
 
 # Install Python dependencies
 pip install -r requirements.txt
+
+# Install Python dependencies for MacOS
+# pip install -r requirements-macos.txt
 ```
+
 
 ---
 
