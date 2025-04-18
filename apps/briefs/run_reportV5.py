@@ -1324,3 +1324,28 @@ print("========== STATS ==========")
 print(f"# {brief_title}\n")
 print(final_brief_text)
 
+
+from datetime import datetime
+import requests
+
+body = {
+    "title": brief_title,
+    "content": final_brief_text,
+    "totalArticles": len(events),
+    "totalSources": len(sources),
+    "usedArticles": len(used_events),
+    "usedSources": len(used_sources),
+    "tldr": tldr,
+    "model_author": brief_model,
+    "createdAt": datetime.now().isoformat(),
+    "clustering_params": best_params,
+}
+
+endpoint = f"{scraper_url}/report"
+
+response = requests.post(
+    endpoint,
+    json=body,
+    headers={"Authorization": f"Bearer {get_env_var('MERIDIAN_SECRET_KEY')}"},
+)
+print(response.json())
